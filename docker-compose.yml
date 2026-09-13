@@ -1,0 +1,15 @@
+services:
+  graphdb:
+    image: ontotext/graphdb:11.4.3
+    container_name: graphdb
+    ports:
+      - "7200:7200"
+    environment:
+      GDB_JAVA_OPTS: "-Xmx2g -Xms1g"
+    volumes:
+      - graphdb_data:/opt/graphdb/home
+      - ./import:/root/graphdb-import
+    restart: unless-stopped
+
+volumes:
+  graphdb_data:

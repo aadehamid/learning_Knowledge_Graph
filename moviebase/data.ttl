@@ -1,0 +1,82 @@
+@prefix data:<https://mymovies.com/data#> .
+@prefix concepts:<https://mymovies.com/concepts#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+data:KingdomOfHeaven  rdf:type concepts:movie ;
+                      concepts:hasRole data:Balian ,
+                                       data:Sybilla ,
+                                       data:Baldwin ,
+                                       data:Saladin ;
+                      concepts:hasActor  data:OrlandoBloom ;
+                      concepts:releaseYear "2005"^^xsd:integer;
+                      concepts:originalLanguage "English"^^xsd:string ;
+                      concepts:originalDuration "138"^^xsd:integer; #minutes
+                      concepts:title "Kingdom of Heaven"@en ,
+                      "Le Royaume de Dieu"@fr ,
+                      "Reino de Dios"@es ;
+                    #   concepts:hasReview _:review1 ,
+                    #                      _:review2 ;
+                      concepts:hasReview [
+                        concepts:rating "5"^^xsd:integer;
+                        concepts:reviewText "An epic historical drama with stunning visuals and a compelling story."@en];
+                      concepts:hasReview [
+                        concepts:rating "4"^^xsd:integer;
+                        concepts:reviewText "A visually impressive film with a strong cast, though the pacing can be slow at times."@en;
+                        concepts:reviewComments [
+                            concepts:reviewCommentsText "Some minor pacing issues, but overall a strong film."@en]
+                        ];
+.
+
+# unnested blank node
+# :_review1 concepts:rating 5 ;
+#           concepts:reviewText "An epic historical drama with stunning visuals and a compelling story."@en ;
+# .
+
+# :_review2 concepts:rating 4 ;
+#           concepts:reviewText "A visually impressive film with a strong cast, though the pacing can be slow at times."@en ;
+# .
+
+data:OrlandoBloom rdf:type concepts:Actor ;
+                      concepts:isFrom data:UK ;
+                      concepts:actsAs data:Balian ;
+.
+data:Balian rdf:type concepts:Blacksmith .
+# data:OrlandoBloom concepts:isFrom data:UK .
+# data:OrlandoBloom concepts:hasOccupation concepts:Actor .
+# data:OrlandoBloom rdf:type concepts:Actor .
+# data:OrlandoBloom  concepts:actsAs data:Balian .
+# data:Balian concepts:hasOccupation concepts:Blacksmith .
+# data:KingdomOfHeaven concepts:hasRole data:Balian.
+# data:KingdomOfHeaven concepts:is  concepts:movie .
+# data:KingdomOfHeaven rdf:type concepts:movie .
+
+# # RDF List  option 1
+# data:LordOfTheRingsTrilogy rdf:type concepts:MovieSeries;
+#                       concepts:hasMovieParts _:lotrList;
+# .
+# _:lotrList rdf:first data:TheFellowshipOfTheRing ;
+#            rdf:rest _:lotrList2 .
+# _:lotrList2 rdf:first data:TheTwoTowers ;
+#             rdf:rest _:lotrList3 .
+# _:lotrList3 rdf:first data:TheReturnOfTheKing ;
+#             rdf:rest rdf:nil;
+# .
+
+# # RDF List  option 2 (using collection syntax)
+data:LordOfTheRingsTrilogy rdf:type concepts:MovieSeries;
+                                concepts:hasMovieParts (data:TheFellowshipOfTheRing data:TheTwoTowers data:TheReturnOfTheKing)
+.
+# RDF List  option 3 (using blank nodes)
+# data:LordOfTheRingsTrilogy rdf:type concepts:MovieSeries;
+#                                 concepts:hasMovieParts [
+#                                     rdf:first data:TheFellowshipOfTheRing ;
+#                                     rdf:rest [
+#                                         rdf:first data:TheTwoTowers ;
+#                                         rdf:rest [
+#                                             rdf:first data:TheReturnOfTheKing ;
+#                                             rdf:rest rdf:nil
+#                                         ]
+#                                     ]
+#                                 ]
+# .
